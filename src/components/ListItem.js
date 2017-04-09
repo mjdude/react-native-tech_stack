@@ -7,9 +7,9 @@ import * as actions from '../actions';
 class ListItem extends Component {
 
     renderDescription(){
-        const {library, selectedLibraryId} = this.props;
+        const {library, expanded} = this.props;
 
-        if (library.id === selectedLibraryId) {
+        if (expanded) {
             return (
                 <Text>{library.description}</Text>
             )
@@ -48,8 +48,10 @@ const styles = {
 // null is in place of returning the state
 // no need to call dispatch ourselves
 
-const mapStateToProps = (state) => {
-    return { selectedLibraryId: state.selectedLibraryId}
+// ownProps are the PROPS from the actual component!
+const mapStateToProps = (state, ownProps) => {
+    const expanded = state.selectedLibraryId === ownProps.library.id;
+    return {expanded}
 }
 
 export default connect(mapStateToProps, actions)(ListItem);
